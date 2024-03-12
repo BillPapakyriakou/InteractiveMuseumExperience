@@ -36,4 +36,9 @@ public class MainMenu : MonoBehaviour
     {
         AudioManager.instance.SetVolume(value, AudioManager.AudioChannel.Music);
     }
+
+    public void SetQuality(int qualityIndex)
+    {
+        QualitySettings.SetQualityLevel(qualityIndex, true);
+    }
 }

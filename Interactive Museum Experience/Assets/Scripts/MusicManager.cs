@@ -17,7 +17,7 @@ public class MusicManager : MonoBehaviour
 
         SceneManager.sceneLoaded += OnSceneLoaded;
 
-        Invoke("PlayMusic", .2f);
+        Invoke("PlayMusic", .2f);  // menu music starts with crossfade
 
     }
 
