@@ -2,13 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
     public static bool gameIsPaused = false;
+    public static bool welcomeUIActive = false;
 
     public GameObject pauseMenuUI;
+    public GameObject welcomeMenuUI;
+
+    MusicManager musicManager;
+
+    void Start()
+    {
+        musicManager = FindObjectOfType<MusicManager>();
+
+        if (SceneManager.GetActiveScene().name.Equals("Game"))
+        {
+            musicManager.Initialize();
+            Invoke("WelcomeMessage", .2f);
+            
+        }
+        
+    }
 
     void Update()
     {
@@ -28,11 +46,31 @@ public class PauseMenu : MonoBehaviour
     public void Resume()
     {
         pauseMenuUI.SetActive(false);
-        Time.timeScale = 1f;
+        
         gameIsPaused = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        
+        if (welcomeUIActive)
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Time.timeScale = 1f;
+        }
+        
+        
+        
         //AudioManager.instance.SetVolume(AudioManager.instance.masterVolumePercent * 2f, AudioManager.AudioChannel.Master);
         // above line initiates menu theme too and changes both volumes, may fix later
+    }
+
+    public void ExitWelcome()
+    {
+        welcomeUIActive = false;
+        welcomeMenuUI.SetActive(false);
+        Time.timeScale = 1f;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Pause()
@@ -54,6 +92,15 @@ public class PauseMenu : MonoBehaviour
     {
         Debug.Log("Quit Game");
         Application.Quit();   // works only on final build
+    }
+
+    public void WelcomeMessage()
+    {
+        welcomeUIActive = true;
+        welcomeMenuUI.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
+        Time.timeScale = 0f;
+
     }
 
 }

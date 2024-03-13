@@ -13,13 +13,18 @@ public class MusicManager : MonoBehaviour
 
     void Start()
     {
-
+  
         sceneName = SceneManager.GetActiveScene().name;
 
         SceneManager.sceneLoaded += OnSceneLoaded;
 
-        Invoke("PlayMusic", .2f);  // menu music starts with crossfade
+        Invoke("PlayMusic", .2f);  // music starts with crossfade
 
+    }
+
+    public void Initialize()
+    {
+        Start();
     }
 
 
