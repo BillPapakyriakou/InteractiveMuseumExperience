@@ -66,6 +66,7 @@ public class AudioManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 
+
     public void PlayMusic(AudioClip clip, float fadeDuration = 1)
     {
         activeMusicSourceIndex = 1 - activeMusicSourceIndex;  // new index = 1 - old index : follows 0-1-0-1 pattern

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static AudioManager;
 
 public class MusicManager : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class MusicManager : MonoBehaviour
         Invoke("PlayMusic", .2f);  // menu music starts with crossfade
 
     }
+
 
     void OnDestroy()
     {
