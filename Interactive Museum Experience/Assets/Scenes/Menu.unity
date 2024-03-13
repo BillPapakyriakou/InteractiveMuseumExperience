@@ -4745,6 +4745,8 @@ MonoBehaviour:
   volumeSliders:
   - {fileID: 26779329}
   - {fileID: 2051179644}
+  qualityDropdown: {fileID: 2019618518}
+  qualityIndex: 1
 --- !u!4 &1790509348
 Transform:
   m_ObjectHideFlags: 0
@@ -5681,7 +5683,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2072506362}
-  - component: {fileID: 2072506363}
   m_Layer: 5
   m_Name: MainMenu
   m_TagString: Untagged
@@ -5714,21 +5715,6 @@ RectTransform:
   m_AnchoredPosition: {x: 1.2499, y: -5.3268}
   m_SizeDelta: {x: 291.125, y: 140.8081}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2072506363
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2072506361}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b511437987b7e14f95b3ffefae5909f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  volumeSliders:
-  - {fileID: 26779329}
-  - {fileID: 2051179644}
 --- !u!1 &2082150833
 GameObject:
   m_ObjectHideFlags: 0

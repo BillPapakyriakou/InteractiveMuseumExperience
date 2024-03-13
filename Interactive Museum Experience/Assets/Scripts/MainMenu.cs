@@ -3,10 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class MainMenu : MonoBehaviour
 {
     public Slider[] volumeSliders;
+
+    public TMP_Dropdown qualityDropdown;
+
+    public int qualityIndex;
+
+    void Awake()
+    {
+        qualityIndex = PlayerPrefs.GetInt("quality index", qualityIndex);  // remember graphics settings
+        SetQuality(qualityIndex);
+    }
 
     void Start()
     {
@@ -14,6 +25,7 @@ public class MainMenu : MonoBehaviour
 
         volumeSliders[0].value = AudioManager.instance.masterVolumePercent;
         volumeSliders[1].value = AudioManager.instance.musicVolumePercent;
+        qualityDropdown.value = qualityIndex;
 
     }
 
@@ -27,6 +39,7 @@ public class MainMenu : MonoBehaviour
         Debug.Log("Quit Game");
         Application.Quit();   // works only on final build
     }
+
     public void SetMasterVolume(float value)
     {
         AudioManager.instance.SetVolume(value, AudioManager.AudioChannel.Master);
@@ -40,5 +53,9 @@ public class MainMenu : MonoBehaviour
     public void SetQuality(int qualityIndex)
     {
         QualitySettings.SetQualityLevel(qualityIndex, true);
+        this.qualityIndex = qualityIndex;
+
+        PlayerPrefs.SetInt("quality index", qualityIndex);  // remember graphics settings
+        
     }
 }
