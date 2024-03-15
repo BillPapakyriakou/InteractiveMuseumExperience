@@ -4,24 +4,42 @@ using UnityEngine;
 
 public class RayCasting : MonoBehaviour
 {
+    public GameObject[] objectsToHit;
 
-    DialogueTrigger trigger;
-    public LayerMask mask;
+    //DialogueTrigger trigger;
 
     void Update()
     {
         Ray ray = new Ray(transform.position, transform.forward);
         RaycastHit hitInfo;
 
-        if (Physics.Raycast(ray, out hitInfo, 100, mask))
+        if (Physics.Raycast(ray, out hitInfo, 100))
         {
-            //Debug.DrawLine(ray.origin, hitInfo.point, Color.red);
-            //Debug.Log("We hit a " + hitInfo.transform.name);
-            if (Input.GetKeyUp(KeyCode.I)) 
+            GameObject hitObject = hitInfo.collider.gameObject;
+
+            foreach (GameObject obj in objectsToHit)
             {
-                FindObjectOfType<DialogueTrigger>().TriggerDialogue();
+                if (obj == hitObject)
+                {
+
+                    if (Input.GetKeyUp(KeyCode.I))
+                    {
+                        DialogueTrigger trigger = hitObject.GetComponent<DialogueTrigger>();
+
+                        if (trigger != null)
+                        {
+                            trigger.TriggerDialogue();
+                        }
+
+                        //FindObjectOfType<DialogueTrigger>().TriggerDialogue();
+                    }
+                    //FindObjectOfType<DialogueTrigger>().TriggerDialogue();
+
+                    break;
+                }
             }
-            //FindObjectOfType<DialogueTrigger>().TriggerDialogue();
+
+            
         }
         else
         {
