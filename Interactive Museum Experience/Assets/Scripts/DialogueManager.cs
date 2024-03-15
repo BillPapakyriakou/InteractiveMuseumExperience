@@ -12,6 +12,8 @@ public class DialogueManager : MonoBehaviour
     public TMP_Text nameText;
     public TMP_Text dialogueText;
 
+    public bool isDialogueShown = false;
+
     CameraController controller;
 
     private Queue<string> sentences;
@@ -23,6 +25,7 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(Dialogue dialogue)
     {
+        isDialogueShown = true;
         controller = FindObjectOfType<CameraController>();
 
         controller.DisableCameraMovement();
@@ -71,6 +74,7 @@ public class DialogueManager : MonoBehaviour
 
     public void EndDialogue()
     {
+        isDialogueShown = false;
         //Debug.Log("End of info");
         dialogueUI.SetActive(false);
         //FindObjectOfType<CameraController>().ToggleMovement();

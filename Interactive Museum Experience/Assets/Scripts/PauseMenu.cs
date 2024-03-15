@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
-    public static bool gameIsPaused = false;
+    public  bool gameIsPaused = false;
     public static bool welcomeUIActive = false;
 
     public GameObject pauseMenuUI;
@@ -30,7 +30,7 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Escape))
+        if (Input.GetKeyUp(KeyCode.Escape) && !FindObjectOfType<DialogueManager>().isDialogueShown)
         {
             if (gameIsPaused)
             {

@@ -10,8 +10,10 @@ public class DialogueTrigger : MonoBehaviour
 
     public void TriggerDialogue()
     {
-        
-        FindObjectOfType<DialogueManager>().StartDialogue(dialogue);
+        if (!FindObjectOfType<PauseMenu>().gameIsPaused)
+        {
+            FindObjectOfType<DialogueManager>().StartDialogue(dialogue);
+        }
         
     }
 
