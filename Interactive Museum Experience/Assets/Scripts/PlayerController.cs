@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     public CharacterController characterController;
 
     public float speed = 12f;
-    public float gravity = -9.81f;
+    public float gravity = -9.81f * 2f;
     public float jumpHeight = 3f;
 
     public Transform groundCheck;
