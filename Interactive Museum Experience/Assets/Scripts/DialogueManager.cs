@@ -58,7 +58,7 @@ public class DialogueManager : MonoBehaviour
         string sentence = sentences.Dequeue();
         
         StopAllCoroutines(); // stops TypeSequence animation if we press continue before  finished
-        StartCoroutine(TypeSequence(sentence, .015f));
+        StartCoroutine(TypeSequence(sentence, .01f));
 
     }
 
