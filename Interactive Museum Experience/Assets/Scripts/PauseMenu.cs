@@ -30,7 +30,7 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Escape) && !FindObjectOfType<DialogueManager>().isDialogueShown)
+        if (Input.GetKeyUp(KeyCode.Escape) && !FindObjectOfType<DialogueManager>().isDialogueShown && !FindObjectOfType<QuizManager>().quizIsActive)
         {
             if (gameIsPaused)
             {
