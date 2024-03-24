@@ -26,6 +26,8 @@ public class QuizManager : MonoBehaviour
 
     CameraController controller;
 
+    private List<int> usedQuestionIndices = new List<int>();  //Track used question indices
+
     void Start()
     {
         totalQuestions = 2;  // set number of questions for the quiz
@@ -35,7 +37,7 @@ public class QuizManager : MonoBehaviour
 
     void Update()  // review later
     {
-        if (Input.GetKeyUp(KeyCode.Q) && !FindObjectOfType<DialogueManager>().isDialogueShown)
+        if (Input.GetKeyUp(KeyCode.Q) && !FindObjectOfType<DialogueManager>().isDialogueShown && !quizIsActive)
         {
             InitiateQuiz();
             
@@ -45,15 +47,26 @@ public class QuizManager : MonoBehaviour
     public void Correct()
     {
         score += 1;
-        assets.RemoveAt(currentQuestionIndex);  // dont repeat question
-        GenerateQuestion();
+        
+        RemoveCurrentQuestion();
     }
 
     public void Wrong()
     {
-        assets.RemoveAt(currentQuestionIndex);  // dont repeat question
-        GenerateQuestion();
-        
+        RemoveCurrentQuestion();
+    }
+
+    void RemoveCurrentQuestion()
+    {
+        usedQuestionIndices.Add(currentQuestionIndex); // Track used question index
+        if (assets.Count > 0)
+        {
+            GenerateQuestion();
+        }
+        else
+        {
+            QuizOver();  // No more questions, end quiz
+        }
     }
 
     void SetAnswers()
@@ -75,7 +88,13 @@ public class QuizManager : MonoBehaviour
     {
         if (assets.Count > 0 && totalQuestions > 0)
         {
-            currentQuestionIndex = Random.Range(0, assets.Count);
+            // Find a random question index that hasn't been used
+            do
+            {
+                currentQuestionIndex = Random.Range(0, assets.Count);
+            } 
+            while (usedQuestionIndices.Contains(currentQuestionIndex));
+
 
             QuestionText.text = assets[currentQuestionIndex].Question;
             SetAnswers();
@@ -84,11 +103,19 @@ public class QuizManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Out of questions");
+            //Debug.Log("Out of questions");
             QuizOver();
         }
 
     }
+
+    public void QuizReset()
+    {
+        totalQuestions = totalQuestionsFixed - 1;
+        score = 0;
+        usedQuestionIndices.Clear(); // Clear used question indices
+    }
+
 
     public void InitiateQuiz()  // quiz minigame prompt
     {
@@ -114,7 +141,7 @@ public class QuizManager : MonoBehaviour
         quizUI.SetActive(false);
         quizOverUI.SetActive(true);
         ScoreText.text = "Your quiz score was " + score + "/" + totalQuestionsFixed;
-        
+        QuizReset();
     }
 
     public void ExitQuiz()  // quiz minigame end 
