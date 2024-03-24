@@ -14,6 +14,7 @@ public class PauseMenu : MonoBehaviour
     public GameObject welcomeMenuUI;
 
     MusicManager musicManager;
+    CameraController controller;
 
     void Start()
     {
@@ -71,6 +72,7 @@ public class PauseMenu : MonoBehaviour
         welcomeMenuUI.SetActive(false);
         Time.timeScale = 1f;
         Cursor.lockState = CursorLockMode.Locked;
+        controller.ToggleMovement();
     }
 
     void Pause()
@@ -96,10 +98,14 @@ public class PauseMenu : MonoBehaviour
 
     public void WelcomeMessage()
     {
+        controller = FindObjectOfType<CameraController>();
+
+        controller.DisableCameraMovement();
+
         welcomeUIActive = true;
         welcomeMenuUI.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
-        Time.timeScale = 0f;
+        //Time.timeScale = 0f;
 
     }
 

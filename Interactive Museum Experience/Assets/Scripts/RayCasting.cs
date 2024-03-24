@@ -6,7 +6,7 @@ public class RayCasting : MonoBehaviour
 {
     public GameObject[] objectsToHit;
 
-    //DialogueTrigger trigger;
+    DialogueTrigger trigger;
 
     void Update()
     {
