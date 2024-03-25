@@ -30,7 +30,7 @@ public class QuizManager : MonoBehaviour
 
     void Start()
     {
-        totalQuestions = 2;  // set number of questions for the quiz
+        totalQuestions = 5;  // set number of questions for the quiz
         totalQuestionsFixed = totalQuestions;
         GenerateQuestion();
     }
