@@ -42,6 +42,12 @@ public class QuizManager : MonoBehaviour
             
             
         }
+        if (Input.GetKeyUp(KeyCode.Escape) && quizIsActive)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            QuizReset();
+            ExitQuiz();
+        }
     }
 
     public void Correct()

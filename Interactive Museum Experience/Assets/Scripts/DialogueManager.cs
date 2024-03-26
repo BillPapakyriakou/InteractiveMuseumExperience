@@ -23,6 +23,15 @@ public class DialogueManager : MonoBehaviour
         sentences = new Queue<string>();
     }
 
+    void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.Escape) && isDialogueShown)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            EndDialogue();
+        }
+    }
+
     public void StartDialogue(Dialogue dialogue)
     {
         isDialogueShown = true;
