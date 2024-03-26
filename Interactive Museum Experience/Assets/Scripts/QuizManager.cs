@@ -31,8 +31,7 @@ public class QuizManager : MonoBehaviour
     void Start()
     {
         totalQuestions = 5;  // set number of questions for the quiz
-        totalQuestionsFixed = totalQuestions;
-        GenerateQuestion();
+        totalQuestionsFixed = totalQuestions;        
     }
 
     void Update()  // review later
@@ -40,6 +39,7 @@ public class QuizManager : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Q) && !FindObjectOfType<DialogueManager>().isDialogueShown && !quizIsActive)
         {
             InitiateQuiz();
+            
             
         }
     }
@@ -91,6 +91,7 @@ public class QuizManager : MonoBehaviour
             // Find a random question index that hasn't been used
             do
             {
+                //Debug.Log("pick random");
                 currentQuestionIndex = Random.Range(0, assets.Count);
             } 
             while (usedQuestionIndices.Contains(currentQuestionIndex));
@@ -111,9 +112,10 @@ public class QuizManager : MonoBehaviour
 
     public void QuizReset()
     {
-        totalQuestions = totalQuestionsFixed - 1;
+        totalQuestions = totalQuestionsFixed;
         score = 0;
         usedQuestionIndices.Clear(); // Clear used question indices
+        
     }
 
 
@@ -133,7 +135,8 @@ public class QuizManager : MonoBehaviour
         
         quizPromptUI.SetActive(false);
         quizUI.SetActive(true);
-        
+        GenerateQuestion();
+
     }
 
     public void QuizOver()
@@ -152,5 +155,6 @@ public class QuizManager : MonoBehaviour
         quizOverUI.SetActive(false);
         quizIsActive = false;
         controller.ToggleMovement();
+
     }
 }
