@@ -22,7 +22,7 @@ public class RayCasting : MonoBehaviour
                 if (obj == hitObject)
                 {
 
-                    if (Input.GetKeyUp(KeyCode.I) && !FindObjectOfType<QuizManager>().quizIsActive)
+                    if (Input.GetKeyUp(KeyCode.I) && !FindObjectOfType<QuizManager>().quizIsActive && !FindObjectOfType<Puzzle>().puzzleIsActive)
                     {
                         DialogueTrigger trigger = hitObject.GetComponent<DialogueTrigger>();
 

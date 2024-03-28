@@ -36,7 +36,7 @@ public class QuizManager : MonoBehaviour
 
     void Update()  // review later
     {
-        if (Input.GetKeyUp(KeyCode.Q) && !FindObjectOfType<DialogueManager>().isDialogueShown && !quizIsActive)
+        if (Input.GetKeyUp(KeyCode.Q) && !FindObjectOfType<DialogueManager>().isDialogueShown && !FindObjectOfType<Puzzle>().puzzleIsActive && !quizIsActive)
         {
             InitiateQuiz();
             

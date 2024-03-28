@@ -25,6 +25,8 @@ public class Puzzle : MonoBehaviour
 
     bool blockIsMoving;
 
+    public bool puzzleIsActive;
+
     bool puzzlePromptUIActive;
     bool puzzleInPlayUIActive;
     bool puzzleCompletedUIActive;
@@ -46,9 +48,16 @@ public class Puzzle : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.P) && !FindObjectOfType<QuizManager>().quizIsActive && !FindObjectOfType<DialogueManager>().isDialogueShown &&!FindObjectOfType<PauseMenu>().gameIsPaused)
         {
             InitiatePuzzle();     
+        }
+
+        if (Input.GetKeyUp(KeyCode.Escape) && puzzleIsActive)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            //Debug.Log("exit");
+            ExitPuzzle();
         }
 
         /*
@@ -211,6 +220,8 @@ public class Puzzle : MonoBehaviour
 
     public void InitiatePuzzle()  // puzzle minigame prompt
     {
+        puzzleIsActive = true;
+
         Cursor.lockState = CursorLockMode.None;
 
         controller = FindObjectOfType<CameraController>();
@@ -248,8 +259,6 @@ public class Puzzle : MonoBehaviour
             puzzleCompletedUIActive = true;
         }
 
-        
-
     }
 
     public void ExitPuzzle()  // puzzle minigame end
@@ -271,5 +280,7 @@ public class Puzzle : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         controller.ToggleMovement();
+
+        puzzleIsActive = false;
     }
 }
