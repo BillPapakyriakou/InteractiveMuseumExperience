@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class Puzzle : MonoBehaviour
 {
+    public Camera GameCamera;
+    public Camera PuzzleCamera;
+
+    CameraController controller;
+
     public Texture2D image;
     public int blocksPerLine = 4;
     public int shuffleLength = 20;
@@ -20,6 +25,14 @@ public class Puzzle : MonoBehaviour
 
     bool blockIsMoving;
 
+    bool puzzlePromptUIActive;
+    bool puzzleInPlayUIActive;
+    bool puzzleCompletedUIActive;
+
+    public GameObject puzzlePromptUI;
+    public GameObject puzzleInPlayUI;
+    public GameObject puzzleCompletedUI;
+
     int shuffleMovesRemaining;
 
     Vector2Int previousShuffleOffset;
@@ -27,14 +40,23 @@ public class Puzzle : MonoBehaviour
     void Start()
     {
         CreatePuzzle(); 
+        PuzzleCamera.enabled = false;
+
     }
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            InitiatePuzzle();     
+        }
+
+        /*
         if (state == PuzzleState.Solved && Input.GetKeyDown(KeyCode.Space)) 
         {
             StartShuffle();
-        }    
+        }   
+        */
     }
 
     void CreatePuzzle()
@@ -46,7 +68,17 @@ public class Puzzle : MonoBehaviour
             for (int x = 0; x < blocksPerLine; x++) 
             {
                 GameObject blockObject = GameObject.CreatePrimitive(PrimitiveType.Quad);
+
+                /*
                 blockObject.transform.position = -Vector2.one * (blocksPerLine - 1) * .5f + new Vector2(x, y);
+                blockObject.transform.parent = transform;
+                */
+
+                Vector2 parentPosition = transform.position;
+                Vector2 blockPosition = parentPosition - Vector2.one * (blocksPerLine - 1) * 0.5f + new Vector2(x, y);
+
+                // Set the calculated position
+                blockObject.transform.position = blockPosition;
                 blockObject.transform.parent = transform;
 
                 Block block = blockObject.AddComponent<Block>();
@@ -129,7 +161,7 @@ public class Puzzle : MonoBehaviour
         }
     }
 
-    void StartShuffle()
+    public void StartShuffle()
     {
         state = PuzzleState.Shuffling;
         shuffleMovesRemaining = shuffleLength;
@@ -175,5 +207,69 @@ public class Puzzle : MonoBehaviour
 
         state = PuzzleState.Solved;
         emptyBlock.gameObject.SetActive(true);
+    }
+
+    public void InitiatePuzzle()  // puzzle minigame prompt
+    {
+        Cursor.lockState = CursorLockMode.None;
+
+        controller = FindObjectOfType<CameraController>();
+        controller.DisableCameraMovement();
+
+        puzzlePromptUI.SetActive(true);
+        puzzlePromptUIActive = true;
+    }
+
+    public void StartPuzzle()   // puzzle minigame start
+    {
+        state = PuzzleState.InPlay;
+
+        PuzzleCamera.gameObject.SetActive(true);
+
+        GameCamera.enabled = false;
+        PuzzleCamera.enabled = true;
+
+        puzzlePromptUI.SetActive(false);
+        puzzlePromptUIActive = false;
+
+        puzzleInPlayUI.SetActive(true);
+        puzzlePromptUIActive = true;
+
+    }
+
+    public void PuzzleOver()  
+    {
+        if (state == PuzzleState.Solved)
+        {
+            puzzleInPlayUI.SetActive(false);
+            puzzleInPlayUIActive = false;
+
+            puzzleCompletedUI.SetActive(true);
+            puzzleCompletedUIActive = true;
+        }
+
+        
+
+    }
+
+    public void ExitPuzzle()  // puzzle minigame end
+    {
+
+        GameCamera.enabled = true;
+        PuzzleCamera.enabled = false;
+
+        PuzzleCamera.gameObject.SetActive(false);
+
+        puzzleCompletedUI.SetActive(false);
+        puzzleCompletedUIActive = false;
+
+        puzzleInPlayUI.SetActive(false);
+        puzzleInPlayUIActive = false;
+
+        puzzlePromptUI.SetActive(false);
+        puzzlePromptUIActive = false;
+
+        Cursor.lockState = CursorLockMode.Locked;
+        controller.ToggleMovement();
     }
 }
