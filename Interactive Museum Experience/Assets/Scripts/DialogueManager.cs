@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -21,6 +22,12 @@ public class DialogueManager : MonoBehaviour
     void Start()
     {
         sentences = new Queue<string>();
+
+        //dialogueText.richText = true;
+
+        // Add a link click handler component to the dialogueText
+        //dialogueText.gameObject.AddComponent<LinkOpener>();
+
     }
 
     void Update()
@@ -70,7 +77,7 @@ public class DialogueManager : MonoBehaviour
         StartCoroutine(TypeSequence(sentence, .01f));
 
     }
-
+    
     IEnumerator TypeSequence(string sentence, float delay)
     {
         dialogueText.text = "";
@@ -80,6 +87,7 @@ public class DialogueManager : MonoBehaviour
             yield return new WaitForSeconds(delay);
         }
     }
+    
 
     public void EndDialogue()
     {
@@ -90,5 +98,7 @@ public class DialogueManager : MonoBehaviour
         controller.ToggleMovement();
         Cursor.lockState = CursorLockMode.Locked;
     }
-   
+
+
+
 }
