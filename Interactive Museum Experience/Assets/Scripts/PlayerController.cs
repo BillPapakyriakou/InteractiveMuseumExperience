@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
 
+    // default player pos == x : 1.48, y : 0, z : -1.48
+
     public CharacterController characterController;
 
     public float speed = 12f;
@@ -44,5 +46,30 @@ public class PlayerController : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
 
         characterController.Move(velocity * Time.deltaTime);  // Dy = 1/2 * g * t^2
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            TeleportToGalleryTwo();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            TeleportToGalleryOne();
+        }
+    }
+
+    public void TeleportToGalleryOne()
+    {
+        gameObject.transform.position = new Vector3(148f, 5f, -26f);
+
+    }
+
+    public void TeleportToGalleryTwo()
+    {
+        gameObject.transform.position = new Vector3(1.48f, 0f, -11.59f);
+
     }
 }
+
+    
+

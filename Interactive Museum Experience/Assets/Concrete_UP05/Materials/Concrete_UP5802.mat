@@ -46,6 +46,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _GlossMapScale: 0.5
-    - _Metallic: 0.4
-    m_Colors: []
+    - _Metallic: 0.188
+    m_Colors:
+    - _Color: {r: 0.3207547, g: 0.3207547, b: 0.3207547, a: 1}
   m_BuildTextureStacks: []
