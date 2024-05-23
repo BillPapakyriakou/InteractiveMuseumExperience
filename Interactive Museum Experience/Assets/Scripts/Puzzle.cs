@@ -27,9 +27,9 @@ public class Puzzle : MonoBehaviour
 
     public bool puzzleIsActive;
 
-    bool puzzlePromptUIActive;
-    bool puzzleInPlayUIActive;
-    bool puzzleCompletedUIActive;
+    public bool puzzlePromptUIActive;
+    public bool puzzleInPlayUIActive;
+    public bool puzzleCompletedUIActive;
 
     public GameObject puzzlePromptUI;
     public GameObject puzzleInPlayUI;

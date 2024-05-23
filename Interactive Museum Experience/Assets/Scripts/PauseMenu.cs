@@ -15,10 +15,13 @@ public class PauseMenu : MonoBehaviour
 
     MusicManager musicManager;
     CameraController controller;
+    PlayerController playerController;
 
     void Start()
     {
         musicManager = FindObjectOfType<MusicManager>();
+
+        playerController = FindObjectOfType<PlayerController>();
 
         if (SceneManager.GetActiveScene().name.Equals("Game"))
         {
@@ -106,6 +109,34 @@ public class PauseMenu : MonoBehaviour
         welcomeMenuUI.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
         //Time.timeScale = 0f;
+
+    }
+
+    public void GoToLouvreGallery()
+    {
+        Resume();
+        StartCoroutine(WaitForTeleportOne());
+        
+    }
+
+    public void GoToNationalAthensGallery()
+    {       
+        Resume();
+        StartCoroutine(WaitForTeleportTwo());
+        
+    }
+
+    IEnumerator WaitForTeleportOne()
+    {
+        yield return new WaitForSeconds(.2f); // Pauses execution for 0.2 seconds.
+        playerController.TeleportToGalleryOne();
+        
+    }
+
+    IEnumerator WaitForTeleportTwo()
+    {
+        yield return new WaitForSeconds(.2f); // Pauses execution for 0.2 seconds.
+        playerController.TeleportToGalleryTwo();
 
     }
 

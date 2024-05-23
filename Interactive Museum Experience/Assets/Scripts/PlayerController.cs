@@ -19,55 +19,69 @@ public class PlayerController : MonoBehaviour
 
     Vector3 velocity;
     bool isGrounded;
+    bool playerDisabled = false;
+
+
 
     void Update()
     {
-
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-
-        if (isGrounded && velocity.y < 0) 
+        if (!playerDisabled)
         {
-            velocity.y = -2f;
-        }
-        
+            isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
+            if (isGrounded && velocity.y < 0)
+            {
+                velocity.y = -2f;
+            }
 
-        Vector3 move = transform.right * x + transform.forward * z;
 
-        characterController.Move(move * speed * Time.deltaTime);
+            float x = Input.GetAxis("Horizontal");
+            float z = Input.GetAxis("Vertical");
 
-        if (Input.GetButtonDown("Jump") && isGrounded)
-        {
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-        }
+            Vector3 move = transform.right * x + transform.forward * z;
 
-        velocity.y += gravity * Time.deltaTime;
+            characterController.Move(move * speed * Time.deltaTime);
 
-        characterController.Move(velocity * Time.deltaTime);  // Dy = 1/2 * g * t^2
+            if (Input.GetButtonDown("Jump") && isGrounded)
+            {
+                velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            }
 
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            TeleportToGalleryTwo();
-        }
+            velocity.y += gravity * Time.deltaTime;
 
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            TeleportToGalleryOne();
+            characterController.Move(velocity * Time.deltaTime);  // Dy = 1/2 * g * t^2
+
         }
     }
 
+        
+
     public void TeleportToGalleryOne()
     {
-        gameObject.transform.position = new Vector3(148f, 5f, -26f);
-
+        StartCoroutine(TeleporterOne());
     }
 
     public void TeleportToGalleryTwo()
     {
-        gameObject.transform.position = new Vector3(1.48f, 0f, -11.59f);
+        StartCoroutine(TeleporterTwo());
+    }
 
+    IEnumerator TeleporterOne()
+    {
+        playerDisabled = true;
+        yield return new WaitForSeconds(.2f);
+        gameObject.transform.position = new Vector3(1.48f, 0f, -11.59f);
+        yield return new WaitForSeconds(1f);
+        playerDisabled = false;
+    }
+
+    IEnumerator TeleporterTwo()
+    {
+        playerDisabled = true;
+        yield return new WaitForSeconds(.2f);
+        gameObject.transform.position = new Vector3(148f, 5f, -26f);
+        yield return new WaitForSeconds(1f);
+        playerDisabled = false;
     }
 }
 
